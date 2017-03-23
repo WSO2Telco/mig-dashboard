@@ -3,14 +3,14 @@
   <div class="auth-block">
     <img ng-reflect-src="assets/img/logo_mobileconnect.png" class="offset-xs-3 offset-md-2 offset-lg-4 offset-sm-4 card-title" style="width: 160px;height:auto;" src="assets/img/logo_mobileconnect.png">
     <br>
-    <a routerLink="/register" class="auth-link">New to Mobile connect? Register!</a>
+    <!-- <a routerLink="/register" class="auth-link">New to Mobile connect? Register!</a> -->
 
-    <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="form-horizontal">
-      <div class="form-group row" [ngClass]="{'has-error': (!password.valid && password.touched), 'has-success': (password.valid && password.touched)}">
-        <label for="inputPassword3" class="col-sm-3 control-label">Mobile Number</label>
+    <form *ngIf="!callback" [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="form-horizontal">
+      <div class="form-group row" [ngClass]="{'has-error': (!phone.valid && phone.touched), 'has-success': (phone.valid && phone.touched)}">
+        <label for="phoneInput" class="col-sm-3 control-label">Mobile Number</label>
 
         <div class="col-sm-7">
-          <input [formControl]="password" type="password" class="form-control" id="inputPassword3" placeholder="Enter MSISDN">
+          <input [formControl]="phone" type="text" class="form-control" id="phoneInput" placeholder="Enter MSISDN" pattern="[0-9]{12}">
         </div>
       </div>
       <div class="form-group row">
@@ -20,5 +20,6 @@
       </div>
     </form>
 
+    <div *ngIf="callback">code : {{code}}</div>
   </div>
 </div>
