@@ -15,19 +15,19 @@ export class Login {
   public phone:AbstractControl;
   public submitted:boolean = false;
   public callback:boolean = false;
-  public code:string;
+  public access_token:string;
 
-  constructor(fb:FormBuilder, route: ActivatedRoute) {
+  constructor(fb:FormBuilder, route: ActivatedRoute, private router:Router) {
     this.form = fb.group({
       'phone': ['', Validators.compose([Validators.required])]
     });
 
     this.phone = this.form.controls['phone'];
-    this.code = route.snapshot.queryParams["code"];
+    this.access_token = route.snapshot.queryParams["access_token"];
 
-    if(this.code){
+    if(this.access_token){
       this.callback = true;
-      this.doLogin(this.code);
+      this.doLogin(this.access_token);
     }
   }
 
@@ -40,9 +40,9 @@ export class Login {
   }
 
   /** Send the code and get the access token */
-  public doLogin(code:string):void{
-    //todo:login logic goes here
-    //todo:send the code to backend and get access token
-    alert(code);
+  public doLogin(token:string):void{
+    //save token to localstorage and redirect to dashboard
+    localStorage.setItem('access_token', token);
+    this.router.navigate(['/pages/dashboard']);
   }
 }
